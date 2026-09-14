@@ -1,0 +1,32 @@
+{
+  "name": "Journal",
+  "short_name": "Journal",
+  "description": "Your private daily journal with photos and videos",
+  "start_url": "/journal",
+  "display": "standalone",
+  "background_color": "#faf9f7",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["lifestyle", "productivity"],
+  "shortcuts": [
+    {
+      "name": "New Entry",
+      "short_name": "New",
+      "description": "Write a new journal entry",
+      "url": "/journal/new",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
