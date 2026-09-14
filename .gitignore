@@ -28,3 +28,7 @@ next-env.d.ts
 # Uploads (media files - large binaries)
 public/uploads/*
 !public/uploads/.gitkeep
+
+# Docker / Caddy runtime data
+caddy-data/
+caddy-config/
