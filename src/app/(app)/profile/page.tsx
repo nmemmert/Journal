@@ -35,12 +35,12 @@ export default async function ProfilePage() {
 
       <div className="px-4 py-6 space-y-6">
         {/* Avatar & name */}
-        <div className="flex items-center gap-4">
-          <div className="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center flex-shrink-0">
-            <span className="text-2xl font-bold text-white">{initials}</span>
+        <div className="flex items-center gap-3">
+          <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+            <span className="text-lg font-bold text-white">{initials}</span>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-gray-900">{user.name}</h2>
+            <h2 className="text-lg font-bold text-gray-900">{user.name}</h2>
             <p className="text-gray-500 text-sm">{user.email}</p>
             <p className="text-gray-400 text-xs mt-1">Journaling since {formatDate(user.createdAt)}</p>
           </div>
@@ -53,10 +53,10 @@ export default async function ProfilePage() {
             { label: 'Photos', value: photos, emoji: '📷' },
             { label: 'Videos', value: videos, emoji: '🎬' },
           ].map(stat => (
-            <div key={stat.label} className="card p-4 text-center">
-              <span className="text-2xl">{stat.emoji}</span>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
-              <p className="text-xs text-gray-400">{stat.label}</p>
+            <div key={stat.label} className="card p-3 text-center">
+              <span className="text-lg">{stat.emoji}</span>
+              <p className="text-xl font-bold text-gray-900 mt-0.5">{stat.value}</p>
+              <p className="text-[10px] text-gray-400">{stat.label}</p>
             </div>
           ))}
         </div>

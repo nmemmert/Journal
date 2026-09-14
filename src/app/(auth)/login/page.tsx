@@ -36,10 +36,10 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-indigo-600 rounded-3xl shadow-lg mb-4">
-            <span className="text-4xl">📔</span>
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-indigo-600 rounded-2xl shadow-md mb-3">
+            <span className="text-2xl">📔</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Journal</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Journal</h1>
           <p className="text-gray-500 mt-1">Welcome back</p>
         </div>
 

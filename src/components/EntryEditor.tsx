@@ -92,9 +92,9 @@ export default function EntryEditor({ initial }: Props) {
         <div className="flex items-center justify-between h-14">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-1 text-indigo-600 font-medium -ml-1 px-2 py-1"
+            className="flex items-center gap-0.5 text-indigo-600 font-medium -ml-1 px-2 py-1"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
             Cancel
