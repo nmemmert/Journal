@@ -1,0 +1,17 @@
+services:
+  journal:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "file:/data/journal.db"
+      JWT_SECRET: "${JWT_SECRET:-change-this-to-a-long-random-secret}"
+      NEXT_PUBLIC_APP_URL: "${NEXT_PUBLIC_APP_URL:-http://localhost:3000}"
+    volumes:
+      - db-data:/data
+      - uploads:/app/public/uploads
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  uploads:
