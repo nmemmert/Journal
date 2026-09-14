@@ -43,22 +43,23 @@ export default function SearchPage() {
   }
 
   return (
-    <div>
+    <div className="bg-[#f2f2f7] min-h-screen">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-[#faf9f7]/90 backdrop-blur-lg border-b border-gray-100 px-4"
+      <div className="sticky top-0 z-10 bg-[#f2f2f7]/90 backdrop-blur-xl"
            style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-        <div className="flex items-center h-14">
-          <h1 className="text-xl font-bold text-gray-900 w-20">Search</h1>
-          <form onSubmit={handleSubmit} className="flex-1 flex gap-2">
+        <div className="px-5 pt-3 pb-2">
+          <h1 className="text-[34px] font-bold tracking-tight text-gray-900 mb-3">Search</h1>
+          <form onSubmit={handleSubmit} className="flex gap-2">
             <input
               type="search"
               placeholder="Search entries or #tag…"
               value={query}
               onChange={e => setQuery(e.target.value)}
-              className="flex-1 bg-gray-100 rounded-2xl px-4 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none focus:ring-2 focus:ring-indigo-500"
+              className="flex-1 bg-white rounded-2xl px-4 py-2.5 text-[15px] text-gray-900 placeholder-gray-400 outline-none focus:ring-2 focus:ring-indigo-500/40 shadow-sm"
+              style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.05)' }}
               autoComplete="off"
             />
-            <button type="submit" className="text-indigo-600 font-medium text-sm px-1">
+            <button type="submit" className="text-indigo-600 font-semibold text-[15px] px-2">
               Go
             </button>
           </form>

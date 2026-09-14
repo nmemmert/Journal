@@ -25,15 +25,15 @@ export default async function ProfilePage() {
   const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
 
   return (
-    <div>
-      <div className="sticky top-0 z-10 bg-[#faf9f7]/90 backdrop-blur-lg border-b border-gray-100 px-4"
+    <div className="bg-[#f2f2f7] min-h-screen">
+      <div className="sticky top-0 z-10 bg-[#f2f2f7]/90 backdrop-blur-xl"
            style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-        <div className="flex items-center h-14">
-          <h1 className="text-xl font-bold text-gray-900">Profile</h1>
+        <div className="flex items-center justify-between px-5 pt-3 pb-2">
+          <h1 className="text-[34px] font-bold tracking-tight text-gray-900">Profile</h1>
         </div>
       </div>
 
-      <div className="px-4 py-6 space-y-6">
+      <div className="px-4 pb-8 space-y-4">
         {/* Avatar & name */}
         <div className="flex items-center gap-3">
           <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0">

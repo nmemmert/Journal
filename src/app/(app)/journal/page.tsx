@@ -30,15 +30,12 @@ export default async function JournalPage() {
   const today = formatDate(new Date())
 
   return (
-    <div>
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-[#faf9f7]/90 backdrop-blur-lg border-b border-gray-100"
+    <div className="bg-[#f2f2f7] min-h-screen">
+      {/* Large iOS-style header */}
+      <div className="sticky top-0 z-10 bg-[#f2f2f7]/90 backdrop-blur-xl"
            style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-        <div className="flex items-center justify-between px-4 h-14">
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">Journal</h1>
-            <p className="text-xs text-gray-400">{entries.length} {entries.length === 1 ? 'entry' : 'entries'}</p>
-          </div>
+        <div className="flex items-center justify-between px-5 pt-3 pb-2">
+          <h1 className="text-[34px] font-bold tracking-tight text-gray-900">Journal</h1>
           <Link href="/journal/new"
             className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform">
             <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -49,27 +46,30 @@ export default async function JournalPage() {
       </div>
 
       {entries.length === 0 ? (
-        <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 text-center">
-          <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4">
-            <span className="text-3xl">📔</span>
+        <div className="flex flex-col items-center justify-center min-h-[65vh] px-8 text-center">
+          <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center mb-5">
+            <span className="text-4xl">📔</span>
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Your journal is empty</h2>
-          <p className="text-gray-500 text-sm mb-8 max-w-xs">
-            Capture your thoughts, memories, and moments. Start with your first entry.
+          <h2 className="text-[22px] font-bold text-gray-900 mb-2">Start Your Journal</h2>
+          <p className="text-gray-500 text-[15px] mb-8 max-w-[260px] leading-relaxed">
+            Capture your thoughts, photos, and moments — all in one beautiful place.
           </p>
-          <Link href="/journal/new" className="btn-primary">
-            Write your first entry
+          <Link href="/journal/new" className="btn-primary text-[15px]">
+            Write First Entry
           </Link>
         </div>
       ) : (
-        <div className="px-4 py-4 space-y-6">
+        <div className="px-4 pt-1 pb-6 space-y-5">
           {Object.entries(groups).map(([date, dayEntries]) => (
             <div key={date}>
-              <div className="flex items-center gap-3 mb-3">
-                <span className={`text-sm font-semibold ${date === today ? 'text-indigo-600' : 'text-gray-500'}`}>
+              {/* Date header */}
+              <div className="flex items-center gap-3 mb-3 px-1">
+                <span className={`text-[13px] font-semibold uppercase tracking-wider ${
+                  date === today ? 'text-indigo-600' : 'text-gray-400'
+                }`}>
                   {date === today ? 'Today' : date}
                 </span>
-                <div className="flex-1 h-px bg-gray-100" />
+                <div className="flex-1 h-px bg-gray-200/80" />
               </div>
               <div className="space-y-3">
                 {(dayEntries as typeof entries).map(entry => (

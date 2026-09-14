@@ -1,121 +1,122 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { formatRelative, formatTime, parseTags, truncate } from '@/lib/utils'
 
-interface Media {
-  id: string
-  type: string
-  url: string
-}
-
+interface Media { id: string; type: string; url: string }
 interface Entry {
-  id: string
-  title: string
-  content: string
-  mood: string | null
-  tags: string | null
-  createdAt: string | Date
-  media: Media[]
+  id: string; title: string; content: string; mood: string | null
+  tags: string | null; createdAt: string | Date; media: Media[]
 }
 
 export default function EntryCard({ entry }: { entry: Entry }) {
   const tags = parseTags(entry.tags)
   const images = entry.media.filter(m => m.type === 'image')
   const videos = entry.media.filter(m => m.type === 'video')
-  const hasMedia = entry.media.length > 0
 
   return (
-    <Link href={`/journal/${entry.id}`} className="block card overflow-hidden active:scale-[0.98] transition-transform">
-      {/* Images */}
-      {images.length > 0 && (
-        <div className={`grid gap-0.5 ${images.length === 1 ? 'grid-cols-1' : images.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
-          {images.slice(0, 3).map((img, i) => (
-            <div key={img.id} className="relative aspect-square bg-gray-100">
-              <img src={img.url} alt="" className="w-full h-full object-cover" />
-              {images.length > 3 && i === 2 && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">+{images.length - 3}</span>
+    <Link href={`/journal/${entry.id}`} className="block active:opacity-75 transition-opacity duration-100">
+      {images.length > 0 ? (
+        /* ── Photo card ── */
+        <div className="relative overflow-hidden rounded-[20px]" style={{ aspectRatio: '4/3' }}
+             role="img" aria-label={entry.title || 'Journal entry'}>
+          {/* Background photo */}
+          <img src={images[0].url} alt="" className="absolute inset-0 w-full h-full object-cover" />
+
+          {/* Collage: 2nd and 3rd images as sidebar */}
+          {images.length >= 2 && (
+            <div className="absolute top-0 right-0 bottom-0 w-[35%] flex flex-col gap-px">
+              {images.slice(1, 3).map((img, i) => (
+                <div key={img.id} className="relative flex-1 overflow-hidden">
+                  <img src={img.url} alt="" className="w-full h-full object-cover" />
+                  {images.length > 3 && i === 1 && (
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                      <span className="text-white text-base font-bold">+{images.length - 3}</span>
+                    </div>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
-          ))}
-        </div>
-      )}
-
-      {/* Video thumbnail */}
-      {images.length === 0 && videos.length > 0 && (
-        <div className="relative aspect-video bg-gray-900 flex items-center justify-center">
-          <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
-            <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-          {videos.length > 1 && (
-            <span className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-0.5 rounded-full">
-              {videos.length} videos
-            </span>
           )}
-        </div>
-      )}
 
-      <div className="p-4">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-0.5">
-              {entry.mood && <span className="text-base">{entry.mood}</span>}
-              <span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
-                {formatRelative(entry.createdAt)}
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+          {/* Text overlay at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="flex items-center gap-1.5 mb-1">
+              {entry.mood && <span className="text-sm leading-none">{entry.mood}</span>}
+              <span className="text-white/70 text-[11px] font-medium">
+                {formatRelative(entry.createdAt)} · {formatTime(entry.createdAt)}
               </span>
-              <span className="text-xs text-gray-400">{formatTime(entry.createdAt)}</span>
-            </div>
-            {entry.title && (
-              <h3 className="font-semibold text-gray-900 text-base leading-snug truncate">
-                {entry.title}
-              </h3>
-            )}
-          </div>
-          {hasMedia && (
-            <div className="flex items-center gap-1 text-gray-400 flex-shrink-0">
-              {images.length > 0 && (
-                <span className="text-xs flex items-center gap-0.5">
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  {images.length}
-                </span>
-              )}
               {videos.length > 0 && (
-                <span className="text-xs flex items-center gap-0.5">
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
+                <span className="ml-auto text-white/60 text-[10px] flex items-center gap-0.5">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                   {videos.length}
                 </span>
               )}
             </div>
-          )}
-        </div>
-
-        {/* Content preview */}
-        <p className="text-gray-600 text-sm leading-relaxed">
-          {truncate(entry.content, 120)}
-        </p>
-
-        {/* Tags */}
-        {tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {tags.slice(0, 4).map(tag => (
-              <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">
-                #{tag}
-              </span>
-            ))}
-            {tags.length > 4 && (
-              <span className="text-xs text-gray-400">+{tags.length - 4}</span>
+            <h3 className="text-white font-bold text-[17px] leading-snug drop-shadow">
+              {entry.title || truncate(entry.content, 60)}
+            </h3>
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-2">
+                {tags.slice(0, 3).map(tag => (
+                  <span key={tag} className="text-[10px] font-medium text-white/85 bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        /* ── Text card ── */
+        <div className="card overflow-hidden">
+          {/* Thin accent bar — color by mood presence */}
+          <div className={`h-[3px] ${entry.mood ? 'bg-gradient-to-r from-indigo-500 to-purple-400' : 'bg-gradient-to-r from-gray-200 to-gray-100'}`} />
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-2.5">
+              {entry.mood ? (
+                <span className="text-[18px] leading-none">{entry.mood}</span>
+              ) : (
+                <span className="w-5 h-5 rounded-full bg-indigo-100 flex items-center justify-center">
+                  <svg className="w-3 h-3 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                  </svg>
+                </span>
+              )}
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-[12px] font-semibold text-indigo-600">{formatRelative(entry.createdAt)}</span>
+                <span className="text-[11px] text-gray-400">{formatTime(entry.createdAt)}</span>
+              </div>
+              {videos.length > 0 && (
+                <span className="ml-auto text-gray-400 text-[11px] flex items-center gap-0.5">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  {videos.length}
+                </span>
+              )}
+            </div>
+
+            {entry.title ? (
+              <>
+                <h3 className="font-bold text-gray-900 text-[17px] leading-snug">{entry.title}</h3>
+                <p className="text-[14px] text-gray-500 leading-relaxed mt-1">{truncate(entry.content, 100)}</p>
+              </>
+            ) : (
+              <p className="text-[15px] text-gray-800 leading-relaxed font-[Georgia,serif]">{truncate(entry.content, 130)}</p>
+            )}
+
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-gray-100">
+                {tags.slice(0, 4).map(tag => (
+                  <span key={tag} className="text-[11px] text-indigo-500 font-medium bg-indigo-50 px-2.5 py-0.5 rounded-full">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </Link>
   )
 }

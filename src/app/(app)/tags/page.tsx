@@ -23,11 +23,11 @@ export default async function TagsPage() {
   const sorted = Object.entries(tagCount).sort((a, b) => b[1] - a[1])
 
   return (
-    <div>
-      <div className="sticky top-0 z-10 bg-[#faf9f7]/90 backdrop-blur-lg border-b border-gray-100 px-4"
+    <div className="bg-[#f2f2f7] min-h-screen">
+      <div className="sticky top-0 z-10 bg-[#f2f2f7]/90 backdrop-blur-xl"
            style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-        <div className="flex items-center h-14">
-          <h1 className="text-xl font-bold text-gray-900">Tags</h1>
+        <div className="px-5 pt-3 pb-2">
+          <h1 className="text-[34px] font-bold tracking-tight text-gray-900">Tags</h1>
         </div>
       </div>
 
