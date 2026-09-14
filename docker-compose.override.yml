@@ -7,9 +7,15 @@ services:
   journal:
     build: .
     image: journal:local
+    environment:
+      DATABASE_URL: "file:/data/journal.db"
+      JWT_SECRET: "change-this-to-a-long-random-secret"
+      NEXT_PUBLIC_APP_URL: "http://localhost:3000"
+      NODE_ENV: "production"
+      NEXT_TELEMETRY_DISABLED: "1"
     ports:
       - "3000:3000"
     depends_on: {}
 
   caddy:
-    profiles: ["prod"]   # exclude Caddy when running locally
+    profiles: ["prod"]

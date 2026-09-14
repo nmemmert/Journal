@@ -1,11 +1,10 @@
 services:
   journal:
     image: ghcr.io/nmemmert/journal:main
-    env_file: .env
     environment:
-      # Override DATABASE_URL so it points to the persistent volume,
-      # not the local dev path in .env
       DATABASE_URL: "file:/data/journal.db"
+      JWT_SECRET: "change-this-to-a-long-random-secret"
+      NEXT_PUBLIC_APP_URL: "http://localhost:3000"
       NODE_ENV: "production"
       NEXT_TELEMETRY_DISABLED: "1"
     volumes:
