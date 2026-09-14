@@ -1,9 +1,12 @@
 services:
   journal:
     image: ghcr.io/nmemmert/journal:main
-    env_file: .env
     environment:
       DATABASE_URL: "file:/data/journal.db"
+      JWT_SECRET: "${JWT_SECRET}"
+      NEXT_PUBLIC_APP_URL: "${NEXT_PUBLIC_APP_URL:-http://localhost:3000}"
+      NODE_ENV: "production"
+      NEXT_TELEMETRY_DISABLED: "1"
     volumes:
       - db-data:/data
       - uploads:/app/public/uploads
