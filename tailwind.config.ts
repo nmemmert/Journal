@@ -10,16 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         journal: {
-          50: '#faf8f5',
-          100: '#f3ede4',
-          200: '#e8ddd0',
-          300: '#d4c3ab',
-          400: '#b89f83',
-          500: '#9d7f5e',
-          600: '#7d6047',
-          700: '#5e4735',
-          800: '#3e2e22',
-          900: '#1f1710',
+          50:  '#fdf8f0',
+          100: '#faefd8',
+          200: '#f4dba8',
+          300: '#ecc270',
+          400: '#e5a53e',
+          500: '#d97706',
+          600: '#b45309',
+          700: '#92400e',
+          800: '#78350f',
+          900: '#451a03',
         },
       },
       fontFamily: {
@@ -48,7 +48,11 @@ const config: Config = {
       },
       spacing: {
         'safe-bottom': 'env(safe-area-inset-bottom)',
-        'safe-top': 'env(safe-area-inset-top)',
+        'safe-top':    'env(safe-area-inset-top)',
+      },
+      boxShadow: {
+        'card':  '0 1px 4px rgba(0,0,0,0.07), 0 0 0 0.5px rgba(0,0,0,0.05)',
+        'card-lg': '0 4px 16px rgba(0,0,0,0.10), 0 0 0 0.5px rgba(0,0,0,0.05)',
       },
     },
   },

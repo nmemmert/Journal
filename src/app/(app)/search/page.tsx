@@ -43,23 +43,29 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="bg-[#f2f2f7] min-h-screen">
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-[#f2f2f7]/90 backdrop-blur-xl"
-           style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-        <div className="px-5 pt-3 pb-2">
-          <h1 className="text-[34px] font-bold tracking-tight text-gray-900 mb-3">Search</h1>
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <input
-              type="search"
-              placeholder="Search entries or #tag…"
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              className="flex-1 bg-white rounded-2xl px-4 py-2.5 text-[15px] text-gray-900 placeholder-gray-400 outline-none focus:ring-2 focus:ring-indigo-500/40 shadow-sm"
-              style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.05)' }}
-              autoComplete="off"
-            />
-            <button type="submit" className="text-indigo-600 font-semibold text-[15px] px-2">
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+      <div className="page-header" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+        <div className="px-5 pt-3 pb-3">
+          <h1 className="text-[34px] font-bold tracking-tight text-stone-900 mb-3">Search</h1>
+          <form onSubmit={handleSubmit} className="flex gap-2 items-center">
+            <div className="flex-1 relative">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none"
+                   fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="search"
+                placeholder="Search entries or #tag…"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                className="w-full bg-white rounded-2xl pl-9 pr-4 py-2.5 text-[15px] text-stone-900
+                           placeholder-stone-400 outline-none focus:ring-2 focus:ring-amber-500/30
+                           shadow-card"
+                autoComplete="off"
+              />
+            </div>
+            <button type="submit"
+              className="text-amber-600 font-bold text-[15px] px-2">
               Go
             </button>
           </form>
@@ -68,28 +74,35 @@ export default function SearchPage() {
 
       <div className="px-4 py-4">
         {loading && (
-          <div className="flex items-center justify-center py-16">
-            <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <div className="flex items-center justify-center py-20">
+            <div className="w-7 h-7 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
           </div>
         )}
 
         {!loading && searched && entries.length === 0 && (
-          <div className="text-center py-16">
-            <span className="text-4xl">🔍</span>
-            <p className="text-gray-500 mt-4">No entries found</p>
+          <div className="flex flex-col items-center py-20 text-center">
+            <div className="w-16 h-16 bg-white rounded-2xl shadow-card flex items-center justify-center mb-4">
+              <span className="text-3xl">🔍</span>
+            </div>
+            <p className="text-stone-500 font-medium">No entries found</p>
+            <p className="text-stone-400 text-sm mt-1">Try a different word or tag</p>
           </div>
         )}
 
         {!loading && !searched && (
-          <div className="text-center py-16 text-gray-400">
-            <span className="text-4xl">🔍</span>
-            <p className="mt-4 text-sm">Search by keyword or #tag</p>
+          <div className="flex flex-col items-center py-20 text-center">
+            <div className="w-16 h-16 bg-white rounded-2xl shadow-card flex items-center justify-center mb-4">
+              <span className="text-3xl">🔍</span>
+            </div>
+            <p className="text-stone-400 text-sm">Search by keyword or #tag</p>
           </div>
         )}
 
         {!loading && entries.length > 0 && (
           <div className="space-y-3">
-            <p className="text-sm text-gray-500 mb-2">{entries.length} result{entries.length !== 1 ? 's' : ''}</p>
+            <p className="text-[12px] font-semibold text-stone-400 uppercase tracking-wider px-1 mb-2">
+              {entries.length} result{entries.length !== 1 ? 's' : ''}
+            </p>
             {entries.map(entry => (
               <EntryCard key={entry.id} entry={entry} />
             ))}
