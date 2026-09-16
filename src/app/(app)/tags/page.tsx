@@ -19,38 +19,38 @@ export default async function TagsPage() {
       tagCount[tag] = (tagCount[tag] ?? 0) + 1
     }
   }
-
   const sorted = Object.entries(tagCount).sort((a, b) => b[1] - a[1])
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+    <div className="min-h-screen">
       <div className="page-header" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-        <div className="px-5 pt-3 pb-2.5">
-          <h1 className="text-[34px] font-bold tracking-tight text-stone-900">Tags</h1>
+        <div className="px-5 pt-4 pb-3">
+          <h1 className="text-[34px] font-black tracking-tight" style={{ color: 'var(--text)' }}>Tags</h1>
         </div>
       </div>
 
       <div className="px-4 py-4">
         {sorted.length === 0 ? (
-          <div className="flex flex-col items-center py-20 text-center">
-            <div className="w-16 h-16 bg-white rounded-2xl shadow-card flex items-center justify-center mb-4">
-              <span className="text-3xl">🏷️</span>
+          <div className="flex flex-col items-center py-24 text-center">
+            <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4"
+                 style={{ background: 'rgba(255,255,255,0.85)', boxShadow: 'var(--card-shadow)' }}>
+              <span className="text-4xl">🏷️</span>
             </div>
-            <p className="text-stone-500 font-medium">No tags yet</p>
-            <p className="text-stone-400 text-sm mt-1">Add tags when writing entries</p>
+            <p className="text-[16px] font-semibold" style={{ color: 'var(--text)' }}>No tags yet</p>
+            <p className="text-[14px] mt-1" style={{ color: 'var(--text-3)' }}>Add tags when writing entries</p>
           </div>
         ) : (
           <div className="flex flex-wrap gap-2.5">
             {sorted.map(([tag, count]) => (
-              <Link
-                key={tag}
-                href={`/search?tag=${encodeURIComponent(tag)}`}
-                className="flex items-center gap-2 bg-white rounded-2xl px-4 py-2.5
-                           active:scale-95 transition-transform shadow-card"
-              >
-                <span className="text-amber-700 font-bold text-[14px]">#{tag}</span>
-                <span className="text-[11px] bg-amber-50 text-amber-600 font-bold
-                                 px-2 py-0.5 rounded-full border border-amber-100">
+              <Link key={tag} href={`/search?tag=${encodeURIComponent(tag)}`}
+                className="flex items-center gap-2 bg-white rounded-2xl px-4 py-3
+                           active:scale-95 transition-transform"
+                style={{ boxShadow: 'var(--card-shadow-sm)' }}>
+                <span className="text-[15px] font-bold" style={{ color: 'var(--primary)' }}>
+                  #{tag}
+                </span>
+                <span className="text-[11px] font-bold rounded-full px-2 py-0.5"
+                      style={{ background: 'var(--primary-tint)', color: 'var(--primary)' }}>
                   {count}
                 </span>
               </Link>
