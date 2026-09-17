@@ -4,55 +4,56 @@ import { getAuthUser } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import EntryCard from '@/components/EntryCard'
 
-function groupByDate(entries: { createdAt: Date }[]) {
+function groupByMonth(entries: { createdAt: Date | string }[]) {
   const groups: Record<string, typeof entries> = {}
   for (const entry of entries) {
-    const key = new Date(entry.createdAt).toDateString()
+    const d = new Date(entry.createdAt)
+    const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, '0')}`
     if (!groups[key]) groups[key] = []
     groups[key].push(entry)
   }
   return groups
 }
 
-function parseDateHeader(dateStr: string) {
-  const d = new Date(dateStr)
-  const today = new Date()
-  const yesterday = new Date(today)
-  yesterday.setDate(yesterday.getDate() - 1)
-
-  const isToday     = d.toDateString() === today.toDateString()
-  const isYesterday = d.toDateString() === yesterday.toDateString()
-
-  const day  = d.getDate()
-  const week = d.toLocaleDateString('en-US', { weekday: 'long' })
-  const mon  = d.toLocaleDateString('en-US', { month: 'short' })
-  const yr   = d.getFullYear()
-  const thisYear = today.getFullYear()
-
-  return {
-    day,
-    weekday: isToday ? 'Today' : isYesterday ? 'Yesterday' : week,
-    sub: `${mon} ${yr !== thisYear ? yr : ''}`.trim(),
-    isToday,
-  }
+function getMonthLabel(key: string) {
+  const [year, month] = key.split('-').map(Number)
+  const d = new Date(year, month, 1)
+  const thisYear = new Date().getFullYear()
+  return d.toLocaleDateString('en-US', {
+    month: 'long',
+    ...(year !== thisYear ? { year: 'numeric' } : {}),
+  })
 }
 
 export default async function JournalPage() {
   const auth = await getAuthUser()
   if (!auth) redirect('/login')
 
-  const entries = await prisma.entry.findMany({
-    where: { userId: auth.userId },
-    include: { media: { orderBy: { createdAt: 'asc' } } },
-    orderBy: { createdAt: 'desc' },
-    take: 50,
-  })
+  const [allEntries, recentEntries] = await Promise.all([
+    prisma.entry.findMany({
+      where: { userId: auth.userId },
+      select: { createdAt: true, content: true },
+    }),
+    prisma.entry.findMany({
+      where: { userId: auth.userId },
+      include: { media: { orderBy: { createdAt: 'asc' } } },
+      orderBy: { createdAt: 'desc' },
+      take: 60,
+    }),
+  ])
 
-  const groups = groupByDate(entries as unknown as { createdAt: Date }[])
+  const thisYear = new Date().getFullYear()
+  const yearEntries = allEntries.filter(e => new Date(e.createdAt).getFullYear() === thisYear)
+  const entriesThisYear = yearEntries.length
+  const daysJournaled = new Set(yearEntries.map(e => new Date(e.createdAt).toDateString())).size
+  const totalWords = allEntries.reduce((sum, e) => {
+    return sum + (e.content?.split(/\s+/).filter(Boolean).length ?? 0)
+  }, 0)
+
+  const groups = groupByMonth(recentEntries as unknown as { createdAt: Date }[])
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
       <div className="page-header" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="flex items-center justify-between px-5 pt-4 pb-3">
           <h1 className="text-[34px] font-black tracking-tight" style={{ color: 'var(--text)' }}>
@@ -62,8 +63,8 @@ export default async function JournalPage() {
             className="w-9 h-9 rounded-full flex items-center justify-center
                        active:scale-90 transition-transform"
             style={{
-              background: 'linear-gradient(145deg, #D4681E, #B84A0D)',
-              boxShadow: '0 4px 12px rgba(196,89,26,0.4)',
+              background: 'linear-gradient(145deg, #E8784F, #C45A30)',
+              boxShadow: '0 4px 12px rgba(232,120,79,0.4)',
             }}>
             <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"
                  stroke="currentColor" strokeWidth={2.5}>
@@ -73,53 +74,63 @@ export default async function JournalPage() {
         </div>
       </div>
 
-      {entries.length === 0 ? (
+      {recentEntries.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[65vh] px-8 text-center">
           <div className="w-24 h-24 rounded-3xl flex items-center justify-center mb-6"
-               style={{ background: 'rgba(255,255,255,0.8)', boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}>
+               style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow)' }}>
             <span className="text-5xl">📔</span>
           </div>
           <h2 className="text-[22px] font-bold mb-2" style={{ color: 'var(--text)' }}>Start Your Journal</h2>
           <p className="text-[15px] mb-8 max-w-[260px] leading-relaxed" style={{ color: 'var(--text-2)' }}>
-            Capture your thoughts, photos, and moments — all in one beautiful place.
+            Capture your thoughts, photos, and moments — all in one place.
           </p>
           <Link href="/journal/new" className="btn-primary text-[15px]">
             Write First Entry
           </Link>
         </div>
       ) : (
-        <div className="px-4 pt-2 pb-4 space-y-7">
-          {Object.entries(groups).map(([dateStr, dayEntries]) => {
-            const { day, weekday, sub, isToday } = parseDateHeader(dateStr)
-            return (
-              <div key={dateStr}>
-                {/* Calendar-style date header */}
-                <div className="flex items-end gap-3 mb-4 px-1">
-                  <span className="text-[52px] font-black leading-none tracking-tight"
-                        style={{ color: isToday ? 'var(--primary)' : 'rgba(0,0,0,0.13)' }}>
-                    {day}
-                  </span>
-                  <div className="mb-1">
-                    <p className="text-[15px] font-bold leading-none"
-                       style={{ color: isToday ? 'var(--primary)' : 'var(--text)' }}>
-                      {weekday}
-                    </p>
-                    <p className="text-[12px] font-semibold mt-0.5" style={{ color: 'var(--text-3)' }}>
-                      {sub}
-                    </p>
-                  </div>
-                  <div className="flex-1 mb-2" style={{ height: 1, background: 'rgba(0,0,0,0.08)' }} />
+        <div className="pt-4 pb-4">
+          {/* Insights card */}
+          <div className="mx-4 mb-5 rounded-3xl p-5 overflow-hidden relative"
+               style={{ background: 'linear-gradient(135deg, #2A1B60 0%, #4A30A0 50%, #6B48CC 100%)',
+                        boxShadow: '0 4px 24px rgba(74,48,160,0.4)' }}>
+            <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-15"
+                 style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)',
+                          transform: 'translate(30%,-30%)' }} />
+            <p className="text-white/60 text-[11px] font-bold uppercase tracking-widest mb-4">Insights</p>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { value: entriesThisYear, label: 'Entries\nThis Year' },
+                { value: daysJournaled,   label: 'Days\nJournaled' },
+                { value: totalWords >= 1000 ? `${(totalWords / 1000).toFixed(1)}k` : totalWords, label: 'Words\nAll Time' },
+              ].map(stat => (
+                <div key={stat.label} className="text-center">
+                  <p className="text-white text-[30px] font-black leading-none">{stat.value}</p>
+                  <p className="text-white/55 text-[10px] font-semibold mt-2 leading-tight whitespace-pre-line">
+                    {stat.label}
+                  </p>
                 </div>
+              ))}
+            </div>
+          </div>
 
-                <div className="space-y-4">
-                  {(dayEntries as typeof entries).map(entry => (
+          {/* Entries grouped by month */}
+          <div className="space-y-6 px-4">
+            {Object.entries(groups).map(([key, monthEntries]) => (
+              <div key={key}>
+                <h2 className="text-[13px] font-bold uppercase tracking-widest mb-3 px-1"
+                    style={{ color: 'var(--text-3)' }}>
+                  {getMonthLabel(key)}
+                </h2>
+                <div className="space-y-3">
+                  {(monthEntries as typeof recentEntries).map(entry => (
                     <EntryCard key={entry.id}
                                entry={entry as unknown as Parameters<typeof EntryCard>[0]['entry']} />
                   ))}
                 </div>
               </div>
-            )
-          })}
+            ))}
+          </div>
         </div>
       )}
     </div>

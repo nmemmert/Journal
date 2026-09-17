@@ -18,8 +18,8 @@ export default function LogoutButton() {
     <button
       onClick={handleLogout}
       disabled={loading}
-      className="w-full py-3.5 text-red-500 font-bold bg-white rounded-2xl active:scale-95 transition-transform disabled:opacity-50"
-      style={{ boxShadow: 'var(--card-shadow-sm)' }}
+      className="w-full py-3.5 text-red-400 font-bold rounded-2xl active:scale-95 transition-transform disabled:opacity-50"
+      style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow-sm)' }}
     >
       {loading ? 'Signing out…' : 'Sign Out'}
     </button>

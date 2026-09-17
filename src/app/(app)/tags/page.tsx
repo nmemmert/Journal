@@ -33,7 +33,7 @@ export default async function TagsPage() {
         {sorted.length === 0 ? (
           <div className="flex flex-col items-center py-24 text-center">
             <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4"
-                 style={{ background: 'rgba(255,255,255,0.85)', boxShadow: 'var(--card-shadow)' }}>
+                 style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow)' }}>
               <span className="text-4xl">🏷️</span>
             </div>
             <p className="text-[16px] font-semibold" style={{ color: 'var(--text)' }}>No tags yet</p>
@@ -43,9 +43,9 @@ export default async function TagsPage() {
           <div className="flex flex-wrap gap-2.5">
             {sorted.map(([tag, count]) => (
               <Link key={tag} href={`/search?tag=${encodeURIComponent(tag)}`}
-                className="flex items-center gap-2 bg-white rounded-2xl px-4 py-3
+                className="flex items-center gap-2 rounded-2xl px-4 py-3
                            active:scale-95 transition-transform"
-                style={{ boxShadow: 'var(--card-shadow-sm)' }}>
+                style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow-sm)' }}>
                 <span className="text-[15px] font-bold" style={{ color: 'var(--primary)' }}>
                   #{tag}
                 </span>

@@ -62,28 +62,25 @@ export default function Navigation() {
          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <div className="relative flex items-center w-[calc(100%-2rem)] max-w-md mb-4 h-16 px-2"
            style={{
-             background: 'rgba(255,255,255,0.92)',
+             background: 'rgba(28,28,30,0.96)',
              backdropFilter: 'blur(24px)',
              WebkitBackdropFilter: 'blur(24px)',
              borderRadius: 28,
-             boxShadow: '0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)',
+             boxShadow: '0 8px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
            }}>
 
-        {/* Tab items (excluding center slot) */}
         {tabs.map((tab, i) => {
           if (tab.href === '/journal/new') {
-            /* center spacer */
             return <div key="spacer" className="flex-1" />
           }
           const active =
             pathname === tab.href ||
             (tab.href !== '/journal' && pathname.startsWith(tab.href))
-          const isRight = i > 2
+          const _isRight = i > 2
 
           return (
             <Link key={tab.href} href={tab.href}
-              className={`flex flex-col items-center justify-center gap-1 flex-1 h-full
-                          ${isRight ? '' : ''} rounded-3xl transition-colors`}>
+              className="flex flex-col items-center justify-center gap-1 flex-1 h-full rounded-3xl transition-colors">
               <span style={{ color: active ? 'var(--primary)' : 'var(--text-3)' }}
                     className="transition-colors">
                 {tab.icon(active)}
@@ -101,8 +98,8 @@ export default function Navigation() {
           className="absolute left-1/2 -translate-x-1/2 -translate-y-7 w-14 h-14
                      flex items-center justify-center rounded-2xl active:scale-90 transition-transform"
           style={{
-            background: 'linear-gradient(145deg, #D4681E, #B84A0D)',
-            boxShadow: '0 6px 20px rgba(196,89,26,0.45), 0 2px 6px rgba(196,89,26,0.3), inset 0 1px 0 rgba(255,255,255,0.15)',
+            background: 'linear-gradient(145deg, #E8784F, #C45A30)',
+            boxShadow: '0 6px 20px rgba(232,120,79,0.5), 0 2px 6px rgba(232,120,79,0.3), inset 0 1px 0 rgba(255,255,255,0.15)',
           }}>
           <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24"
                stroke="currentColor" strokeWidth={2.5}>

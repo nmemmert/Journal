@@ -22,7 +22,7 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
   const hasHero = images.length > 0
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen" style={{ background: 'var(--bg)' }}>
       {hasHero ? (
         <div className="relative" style={{ height: '62vw', minHeight: 240, maxHeight: 400 }}>
           <img src={images[0].url} alt="" className="w-full h-full object-cover" />
@@ -72,7 +72,7 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
         </div>
       ) : (
         /* Text-only header bar */
-        <div style={{ background: 'var(--bg-grad)', borderBottom: '1px solid rgba(0,0,0,0.07)',
+        <div style={{ background: 'var(--bg)', borderBottom: '1px solid var(--border)',
                       paddingTop: 'env(safe-area-inset-top)' }}>
           <div className="flex items-center justify-between px-4 h-14">
             <Link href="/journal"

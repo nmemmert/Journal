@@ -61,8 +61,8 @@ export default function SearchPage() {
                 placeholder="Search entries or #tag…"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                className="w-full bg-white rounded-2xl pl-10 pr-4 py-3 text-[15px] outline-none"
-                style={{ color: 'var(--text)', boxShadow: 'var(--card-shadow-sm)', border: 'none' }}
+                className="w-full rounded-2xl pl-10 pr-4 py-3 text-[15px] outline-none"
+                style={{ background: 'var(--card)', color: 'var(--text)', boxShadow: 'var(--card-shadow-sm)', border: 'none' }}
                 autoComplete="off"
               />
             </div>
@@ -85,7 +85,7 @@ export default function SearchPage() {
         {!loading && searched && entries.length === 0 && (
           <div className="flex flex-col items-center py-24 text-center">
             <div className="w-18 h-18 rounded-3xl flex items-center justify-center mb-4"
-                 style={{ background: 'rgba(255,255,255,0.85)', boxShadow: 'var(--card-shadow)' }}>
+                 style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow)' }}>
               <span className="text-4xl">🔍</span>
             </div>
             <p className="text-[16px] font-semibold" style={{ color: 'var(--text)' }}>No entries found</p>
@@ -96,7 +96,7 @@ export default function SearchPage() {
         {!loading && !searched && (
           <div className="flex flex-col items-center py-24 text-center">
             <div className="w-18 h-18 rounded-3xl flex items-center justify-center mb-4"
-                 style={{ background: 'rgba(255,255,255,0.85)', boxShadow: 'var(--card-shadow)' }}>
+                 style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow)' }}>
               <span className="text-4xl">🔍</span>
             </div>
             <p className="text-[14px]" style={{ color: 'var(--text-3)' }}>Search by keyword or #tag</p>

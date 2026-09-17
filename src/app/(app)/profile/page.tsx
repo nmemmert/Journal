@@ -31,8 +31,8 @@ export default async function ProfilePage() {
 
       <div className="px-4 pb-8 space-y-4">
         {/* Identity card */}
-        <div className="bg-white rounded-3xl p-5 flex items-center gap-4"
-             style={{ boxShadow: 'var(--card-shadow)' }}>
+        <div className="rounded-3xl p-5 flex items-center gap-4"
+             style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow)' }}>
           {/* Avatar */}
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0"
                style={{
@@ -62,8 +62,8 @@ export default async function ProfilePage() {
             { label: 'Photos',  value: photos,     emoji: '📷' },
             { label: 'Videos',  value: videos,     emoji: '🎬' },
           ].map(stat => (
-            <div key={stat.label} className="bg-white rounded-2xl p-4 text-center"
-                 style={{ boxShadow: 'var(--card-shadow-sm)' }}>
+            <div key={stat.label} className="rounded-2xl p-4 text-center"
+                 style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow-sm)' }}>
               <span className="text-[24px]">{stat.emoji}</span>
               <p className="text-[28px] font-black leading-none mt-1.5"
                  style={{ color: 'var(--text)' }}>
@@ -78,8 +78,8 @@ export default async function ProfilePage() {
         </div>
 
         {/* Info rows */}
-        <div className="bg-white rounded-2xl overflow-hidden"
-             style={{ boxShadow: 'var(--card-shadow-sm)' }}>
+        <div className="rounded-2xl overflow-hidden"
+             style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow-sm)' }}>
           {[
             { label: 'Name',         value: user.name },
             { label: 'Email',        value: user.email },

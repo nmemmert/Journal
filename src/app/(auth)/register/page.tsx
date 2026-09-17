@@ -53,9 +53,9 @@ export default function RegisterPage() {
       </div>
 
       {/* Form */}
-      <div className="flex-1 px-5 pt-8 pb-8" style={{ background: 'var(--bg-grad)' }}>
-        <div className="bg-white rounded-3xl px-5 py-7"
-             style={{ boxShadow: 'var(--card-shadow)' }}>
+      <div className="flex-1 px-5 pt-8 pb-8" style={{ background: 'var(--bg)' }}>
+        <div className="rounded-3xl px-5 py-7"
+             style={{ background: 'var(--card)', boxShadow: 'var(--card-shadow)' }}>
           <h2 className="text-[22px] font-black mb-6" style={{ color: 'var(--text)' }}>
             Create account
           </h2>
