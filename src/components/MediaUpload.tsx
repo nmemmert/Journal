@@ -103,7 +103,7 @@ export default function MediaUpload({ value, onChange }: Props) {
                 <img src={item.preview ?? item.url} alt={item.filename} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center bg-gray-900 text-white p-2">
-                  <svg className="w-8 h-8 mb-1" fill="currentColor" viewBox="0 0 24 24">
+                  <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" style={{ marginBottom: '4px' }}>
                     <path d="M8 5v14l11-7z" />
                   </svg>
                   <span className="text-[10px] text-center truncate w-full text-gray-300">{item.filename}</span>
@@ -123,9 +123,9 @@ export default function MediaUpload({ value, onChange }: Props) {
 
       {/* Upload progress */}
       {inProgress > 0 && (
-        <div className="flex items-center gap-3 bg-indigo-50 px-4 py-3 rounded-2xl">
-          <div className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin flex-shrink-0" />
-          <span className="text-sm text-indigo-700 font-medium">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'rgba(232,120,79,0.12)', padding: '12px 16px', borderRadius: '16px', border: '1px solid rgba(232,120,79,0.2)' }}>
+          <div style={{ width: '18px', height: '18px', border: '2px solid #E8784F', borderTopColor: 'transparent', borderRadius: '50%', flexShrink: 0 }} className="animate-spin" />
+          <span style={{ fontSize: '14px', color: '#E8784F', fontWeight: 500 }}>
             Uploading {inProgress} file{inProgress > 1 ? 's' : ''}…
           </span>
         </div>
@@ -136,12 +136,18 @@ export default function MediaUpload({ value, onChange }: Props) {
         type="button"
         onClick={() => fileInputRef.current?.click()}
         disabled={uploading}
-        className="w-full flex items-center justify-center gap-3 border-2 border-dashed border-gray-200 rounded-2xl py-4 text-gray-500 active:bg-gray-50 transition-colors disabled:opacity-50"
+        style={{
+          width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          gap: '12px', border: '2px dashed rgba(255,255,255,0.15)', borderRadius: '16px',
+          padding: '16px', color: 'rgba(242,242,247,0.45)', background: 'none',
+          cursor: 'pointer', opacity: uploading ? 0.5 : 1,
+          WebkitTapHighlightColor: 'transparent',
+        }}
       >
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 4v16m8-8H4" />
         </svg>
-        <span className="font-medium text-sm">Add Photos or Videos</span>
+        <span style={{ fontWeight: 500, fontSize: '14px' }}>Add Photos or Videos</span>
       </button>
 
       <input

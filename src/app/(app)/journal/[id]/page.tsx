@@ -34,11 +34,16 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
                style={{ paddingTop: 'calc(env(safe-area-inset-top) + 8px)',
                         height: 'calc(env(safe-area-inset-top) + 52px)' }}>
             <Link href="/journal"
-              className="flex items-center gap-1 text-white text-[14px] font-bold
-                         bg-black/25 backdrop-blur-xl px-3 py-1.5 rounded-full"
-              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15)' }}>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              style={{
+                display: 'flex', alignItems: 'center', gap: '4px',
+                color: 'white', fontSize: '14px', fontWeight: 700,
+                background: 'rgba(0,0,0,0.25)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+                padding: '6px 12px', borderRadius: '100px',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15)',
+                textDecoration: 'none',
+              }}>
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 19l-7-7 7-7" />
               </svg>
               Journal
             </Link>
@@ -74,12 +79,15 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
         /* Text-only header bar */
         <div style={{ background: 'var(--bg)', borderBottom: '1px solid var(--border)',
                       paddingTop: 'env(safe-area-inset-top)' }}>
-          <div className="flex items-center justify-between px-4 h-14">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', height: '56px' }}>
             <Link href="/journal"
-              className="flex items-center gap-0.5 text-[15px] font-bold -ml-1 px-2 py-1"
-              style={{ color: 'var(--primary)' }}>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              style={{
+                display: 'flex', alignItems: 'center', gap: '2px',
+                color: 'var(--primary)', fontSize: '15px', fontWeight: 700,
+                textDecoration: 'none', padding: '6px 8px', marginLeft: '-8px',
+              }}>
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 19l-7-7 7-7" />
               </svg>
               Journal
             </Link>
@@ -113,13 +121,12 @@ export default async function EntryPage({ params }: { params: Promise<{ id: stri
         </div>
 
         {entry.location && (
-          <div className="flex items-center gap-1.5 text-[13px] mb-5 -mt-2"
-               style={{ color: 'var(--text-2)' }}>
-            <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', marginBottom: '20px', marginTop: '-8px', color: 'var(--text-2)' }}>
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                 style={{ flexShrink: 0 }}>
+              <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
             {entry.location}
           </div>

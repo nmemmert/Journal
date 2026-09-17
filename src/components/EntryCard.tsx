@@ -51,7 +51,7 @@ export default function EntryCard({ entry }: { entry: Entry }) {
 
           {videos.length > 0 && (
             <div className="absolute top-3 right-3 flex items-center gap-1 bg-black/40 backdrop-blur-md px-2 py-1 rounded-full">
-              <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
               <span className="text-[10px] font-bold text-white">{videos.length}</span>
             </div>
           )}
@@ -124,7 +124,7 @@ export default function EntryCard({ entry }: { entry: Entry }) {
               <span className="text-[15px]">📔</span>
               {videos.length > 0 && (
                 <span className="flex items-center gap-1 mr-1">
-                  <svg className="w-3 h-3" style={{ color: 'var(--text-3)' }} fill="currentColor" viewBox="0 0 24 24">
+                  <svg width="12" height="12" fill="var(--text-3)" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
                   </svg>
                 </span>

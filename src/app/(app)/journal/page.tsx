@@ -55,20 +55,25 @@ export default async function JournalPage() {
   return (
     <div className="min-h-screen">
       <div className="page-header" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
-        <div className="flex items-center justify-between px-5 pt-4 pb-3">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px 12px' }}>
           <h1 className="text-[34px] font-black tracking-tight" style={{ color: 'var(--text)' }}>
             Journal
           </h1>
           <Link href="/journal/new"
-            className="w-9 h-9 rounded-full flex items-center justify-center
-                       active:scale-90 transition-transform"
             style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
               background: 'linear-gradient(145deg, #E8784F, #C45A30)',
               boxShadow: '0 4px 12px rgba(232,120,79,0.4)',
             }}>
-            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+                 stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 4v16m8-8H4" />
             </svg>
           </Link>
         </div>
