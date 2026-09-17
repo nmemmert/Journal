@@ -55,9 +55,11 @@ export default function EntryEditor({ initial }: { initial?: InitialData }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
-      const data = await res.json()
-      if (!res.ok) { setError(data.error ?? 'Save failed'); return }
-      router.push(`/journal/${data.entry.id}`)
+      if (res.status === 401) { router.push('/login'); return }
+      let data: { error?: string; entry?: { id: string } } = {}
+      try { data = await res.json() } catch { /* non-JSON response */ }
+      if (!res.ok) { setError(data.error ?? `Save failed (${res.status})`); return }
+      router.push(`/journal/${data.entry!.id}`)
       router.refresh()
     } catch {
       setError('Network error, please try again')
