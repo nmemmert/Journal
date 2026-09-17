@@ -67,87 +67,183 @@ export default function EntryEditor({ initial }: { initial?: InitialData }) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+      backgroundColor: '#111113',
+    }}>
       {/* Header */}
-      <div className="sticky top-0 z-10" style={{
-        background: 'rgba(255,255,255,0.95)',
+      <div style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 10,
+        backgroundColor: 'rgba(17,17,19,0.95)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
         paddingTop: 'env(safe-area-inset-top)',
       }}>
-        <div className="flex items-center justify-between px-4 h-12">
-          <button onClick={() => router.back()}
-            className="flex items-center gap-0.5 text-[15px] font-semibold -ml-1 px-2 py-1.5"
-            style={{ color: 'var(--primary)' }}>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 16px',
+          height: '52px',
+        }}>
+          <button
+            onClick={() => router.back()}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '2px',
+              color: '#E8784F',
+              fontSize: '15px',
+              fontWeight: 600,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px 4px',
+              WebkitTapHighlightColor: 'transparent',
+            }}
+          >
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" strokeWidth="2.5"
+                 strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 19l-7-7 7-7" />
             </svg>
             Cancel
           </button>
-          <span className="text-[13px] font-semibold" style={{ color: 'var(--text-3)' }}>
+
+          <span style={{ color: 'rgba(242,242,247,0.38)', fontSize: '13px', fontWeight: 600 }}>
             {isEdit ? 'Edit Entry' : todayLabel()}
           </span>
-          <button onClick={handleSave} disabled={saving || !content.trim()}
-            className="text-[15px] font-bold disabled:opacity-30 px-2 py-1.5"
-            style={{ color: 'var(--primary)' }}>
+
+          <button
+            onClick={handleSave}
+            disabled={saving || !content.trim()}
+            style={{
+              color: '#E8784F',
+              fontSize: '16px',
+              fontWeight: 700,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '8px 4px',
+              opacity: (saving || !content.trim()) ? 0.3 : 1,
+              WebkitTapHighlightColor: 'transparent',
+            }}
+          >
             {saving ? 'Saving…' : 'Save'}
           </button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <div style={{ flex: 1, overflowY: 'auto' }}>
         {error && (
-          <div className="mx-4 mt-3 bg-red-50 text-red-600 text-sm px-4 py-2.5 rounded-xl font-medium">
+          <div style={{
+            margin: '12px 16px 0',
+            backgroundColor: 'rgba(239,68,68,0.15)',
+            color: '#F87171',
+            fontSize: '14px',
+            fontWeight: 600,
+            padding: '12px 16px',
+            borderRadius: '12px',
+            border: '1px solid rgba(239,68,68,0.25)',
+          }}>
             {error}
           </div>
         )}
 
-        <div className="px-5 pt-5 pb-2">
+        <div style={{ padding: '20px 20px 8px' }}>
           {/* Mood selector */}
-          <div className="flex items-center gap-2 mb-5">
-            <button type="button" onClick={() => setShowMoodPicker(!showMoodPicker)}
-              className="flex items-center gap-2 rounded-2xl px-3.5 py-2.5 active:opacity-70 transition-opacity"
-              style={{ background: 'rgba(0,0,0,0.04)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+            <button
+              type="button"
+              onClick={() => setShowMoodPicker(!showMoodPicker)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                borderRadius: '20px',
+                padding: '10px 14px',
+                background: 'rgba(255,255,255,0.06)',
+                border: 'none',
+                cursor: 'pointer',
+                WebkitTapHighlightColor: 'transparent',
+              }}
+            >
               {mood ? (
                 <>
-                  <span className="text-[20px] leading-none">{mood}</span>
-                  <span className="text-[13px] font-semibold" style={{ color: 'var(--text-2)' }}>
+                  <span style={{ fontSize: '20px', lineHeight: 1 }}>{mood}</span>
+                  <span style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(242,242,247,0.55)' }}>
                     Change mood
                   </span>
                 </>
               ) : (
                 <>
-                  <svg className="w-4.5 h-4.5" style={{ color: 'var(--text-3)' }}
-                       fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                          d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24"
+                       stroke="rgba(242,242,247,0.4)" strokeWidth="1.8"
+                       strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                   </svg>
-                  <span className="text-[13px] font-semibold" style={{ color: 'var(--text-3)' }}>
+                  <span style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(242,242,247,0.35)' }}>
                     How are you feeling?
                   </span>
                 </>
               )}
             </button>
             {mood && (
-              <button onClick={() => setMood('')}
-                className="text-[12px] font-semibold px-2 py-1" style={{ color: 'var(--text-3)' }}>
+              <button
+                onClick={() => setMood('')}
+                style={{
+                  color: 'rgba(242,242,247,0.35)',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  WebkitTapHighlightColor: 'transparent',
+                }}
+              >
                 Clear
               </button>
             )}
           </div>
 
           {showMoodPicker && (
-            <div className="rounded-2xl p-3 mb-5" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.06)' }}>
-              <div className="grid grid-cols-5 gap-1">
+            <div style={{
+              borderRadius: '16px',
+              padding: '12px',
+              marginBottom: '20px',
+              background: '#1C1C1E',
+              border: '1px solid rgba(255,255,255,0.06)',
+            }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(5, 1fr)',
+                gap: '4px',
+              }}>
                 {MOODS.map(m => (
-                  <button key={m.emoji} type="button"
+                  <button
+                    key={m.emoji}
+                    type="button"
                     onClick={() => { setMood(m.emoji); setShowMoodPicker(false) }}
-                    className="flex flex-col items-center p-2.5 rounded-xl active:scale-90 transition-transform"
-                    style={{ background: mood === m.emoji ? 'var(--primary-tint)' : 'transparent',
-                             outline: mood === m.emoji ? `1.5px solid var(--primary)` : 'none' }}>
-                    <span className="text-[22px]">{m.emoji}</span>
-                    <span className="text-[9px] font-medium mt-0.5" style={{ color: 'var(--text-3)' }}>
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      padding: '10px 4px',
+                      borderRadius: '12px',
+                      background: mood === m.emoji ? 'rgba(232,120,79,0.18)' : 'transparent',
+                      border: mood === m.emoji ? '1.5px solid #E8784F' : '1.5px solid transparent',
+                      cursor: 'pointer',
+                      WebkitTapHighlightColor: 'transparent',
+                    }}
+                  >
+                    <span style={{ fontSize: '22px' }}>{m.emoji}</span>
+                    <span style={{ fontSize: '9px', fontWeight: 500, color: 'rgba(242,242,247,0.4)', marginTop: '2px' }}>
                       {m.label}
                     </span>
                   </button>
@@ -157,66 +253,147 @@ export default function EntryEditor({ initial }: { initial?: InitialData }) {
           )}
 
           {/* Title */}
-          <input type="text" placeholder="Title"
-            className="w-full text-[27px] font-bold placeholder:font-bold
-                       bg-transparent border-none outline-none mb-2 tracking-tight"
-            style={{ color: 'var(--text)', caretColor: 'var(--primary)' }}
-            placeholder-style={{ color: 'rgba(0,0,0,0.15)' }}
-            value={title} onChange={e => setTitle(e.target.value)} />
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            style={{
+              display: 'block',
+              width: '100%',
+              fontSize: '27px',
+              fontWeight: 700,
+              color: '#F2F2F7',
+              background: 'transparent',
+              border: 'none',
+              outline: 'none',
+              marginBottom: '8px',
+              caretColor: '#E8784F',
+              letterSpacing: '-0.02em',
+              boxSizing: 'border-box',
+            }}
+          />
 
-          <div style={{ height: 1, background: 'rgba(0,0,0,0.07)', marginBottom: 16 }} />
+          <div style={{ height: 1, background: 'rgba(255,255,255,0.07)', marginBottom: '16px' }} />
 
           {/* Content */}
           <textarea
             placeholder="What's on your mind…"
-            className="w-full min-h-[260px] text-[16.5px] leading-[1.75]
-                       bg-transparent border-none outline-none resize-none"
-            style={{ color: 'var(--text)', fontFamily: 'Georgia, Charter, serif',
-                     caretColor: 'var(--primary)' }}
-            value={content} onChange={e => setContent(e.target.value)}
-            autoFocus={!isEdit} />
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            autoFocus={!isEdit}
+            rows={12}
+            style={{
+              display: 'block',
+              width: '100%',
+              fontSize: '17px',
+              lineHeight: 1.75,
+              color: '#F2F2F7',
+              background: 'transparent',
+              border: 'none',
+              outline: 'none',
+              resize: 'none',
+              fontFamily: 'Georgia, Charter, serif',
+              caretColor: '#E8784F',
+              boxSizing: 'border-box',
+            }}
+          />
         </div>
 
         {/* Media */}
-        <div className="px-5 pb-5">
-          <p className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: 'var(--text-3)' }}>
+        <div style={{ padding: '0 20px 20px' }}>
+          <p style={{
+            fontSize: '10px',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: 'rgba(242,242,247,0.3)',
+            marginBottom: '12px',
+          }}>
             Photos & Videos
           </p>
           <MediaUpload value={media} onChange={setMedia} />
         </div>
 
-        {/* Tags & location */}
-        <div className="px-5 pb-10">
-          <button type="button" onClick={() => setShowExtras(!showExtras)}
-            className="flex items-center gap-1.5 text-[13px] font-bold mb-3"
-            style={{ color: 'var(--primary)' }}>
-            <svg className={`w-3.5 h-3.5 transition-transform ${showExtras ? 'rotate-180' : ''}`}
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        {/* Tags & Location */}
+        <div style={{ padding: '0 20px 40px' }}>
+          <button
+            type="button"
+            onClick={() => setShowExtras(!showExtras)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '14px',
+              fontWeight: 700,
+              color: '#E8784F',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              marginBottom: '12px',
+              padding: '4px 0',
+              WebkitTapHighlightColor: 'transparent',
+            }}
+          >
+            <svg
+              width="14" height="14"
+              style={{ transform: showExtras ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"
+              strokeLinecap="round" strokeLinejoin="round"
+            >
+              <path d="M19 9l-7 7-7-7" />
             </svg>
-            {showExtras ? 'Hide' : 'Tags & Location'}
+            {showExtras ? 'Hide extras' : 'Tags & Location'}
           </button>
 
           {showExtras && (
-            <div className="space-y-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-widest block mb-2"
-                       style={{ color: 'var(--text-3)' }}>Tags</label>
-                <input type="text" placeholder="hiking, family, gratitude" className="input-field"
-                  value={tagInput} onChange={e => setTagInput(e.target.value)} />
-                <p className="text-[11px] mt-1 ml-1" style={{ color: 'var(--text-3)' }}>Separate with commas</p>
+                <label style={{
+                  display: 'block',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: 'rgba(242,242,247,0.3)',
+                  marginBottom: '8px',
+                }}>Tags</label>
+                <input
+                  type="text"
+                  placeholder="hiking, family, gratitude"
+                  className="input-field"
+                  value={tagInput}
+                  onChange={e => setTagInput(e.target.value)}
+                />
+                <p style={{ fontSize: '11px', marginTop: '4px', marginLeft: '4px', color: 'rgba(242,242,247,0.3)' }}>
+                  Separate with commas
+                </p>
               </div>
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-widest block mb-2"
-                       style={{ color: 'var(--text-3)' }}>Location</label>
-                <input type="text" placeholder="Where are you?" className="input-field"
-                  value={location} onChange={e => setLocation(e.target.value)} />
+                <label style={{
+                  display: 'block',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: 'rgba(242,242,247,0.3)',
+                  marginBottom: '8px',
+                }}>Location</label>
+                <input
+                  type="text"
+                  placeholder="Where are you?"
+                  className="input-field"
+                  value={location}
+                  onChange={e => setLocation(e.target.value)}
+                />
               </div>
             </div>
           )}
 
-          <div className="text-right mt-5">
-            <span className="text-[11px]" style={{ color: 'var(--text-3)' }}>{content.length} characters</span>
+          <div style={{ textAlign: 'right', marginTop: '20px' }}>
+            <span style={{ fontSize: '11px', color: 'rgba(242,242,247,0.3)' }}>
+              {content.length} chars
+            </span>
           </div>
         </div>
       </div>

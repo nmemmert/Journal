@@ -61,8 +61,8 @@ export default function RegisterPage() {
           </h2>
 
           {error && (
-            <div className="bg-red-50 border border-red-100 text-red-600 text-[14px] font-semibold
-                            px-4 py-3 rounded-2xl mb-4 text-center">
+            <div className="text-[14px] font-semibold px-4 py-3 rounded-2xl mb-4 text-center"
+                 style={{ background: 'rgba(239,68,68,0.15)', color: '#F87171', border: '1px solid rgba(239,68,68,0.25)' }}>
               {error}
             </div>
           )}

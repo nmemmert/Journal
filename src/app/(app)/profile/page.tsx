@@ -87,7 +87,7 @@ export default async function ProfilePage() {
           ].map((row, i, arr) => (
             <div key={row.label}
                  className="px-4 py-3.5 flex items-center justify-between gap-3"
-                 style={{ borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
+                 style={{ borderBottom: i < arr.length - 1 ? '1px solid var(--border)' : 'none' }}>
               <span className="text-[14px] font-semibold flex-shrink-0" style={{ color: 'var(--text)' }}>
                 {row.label}
               </span>

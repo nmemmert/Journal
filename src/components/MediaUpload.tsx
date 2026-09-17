@@ -87,7 +87,8 @@ export default function MediaUpload({ value, onChange }: Props) {
     <div className="space-y-3">
       {/* Error messages */}
       {errors.map((err, i) => (
-        <div key={i} className="bg-red-50 text-red-600 text-sm px-4 py-2 rounded-2xl flex items-center justify-between">
+        <div key={i} className="text-sm px-4 py-2 rounded-2xl flex items-center justify-between"
+             style={{ background: 'rgba(239,68,68,0.15)', color: '#F87171', border: '1px solid rgba(239,68,68,0.2)' }}>
           <span>{err}</span>
           <button onClick={() => setErrors(e => e.filter((_, j) => j !== i))} className="ml-2 text-red-400">✕</button>
         </div>
